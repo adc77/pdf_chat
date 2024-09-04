@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/140J5WSN2mmKDGcTwdxUJW-9Bkri5DUty
 """
 
+""" dependencies
 !pip -qqq install pip --progress-bar off
 !pip -qqq install langchain-groq==0.1.3 --progress-bar off
 !pip -qqq install langchain==0.1.17 --progress-bar off
@@ -15,6 +16,7 @@ Original file is located at
 !pip -qqq install "unstructured[md]"==0.13.6 --progress-bar off
 !pip -qqq install fastembed==0.2.7 --progress-bar off
 !pip -qqq install flashrank==0.2.4 --progress-bar off
+"""
 
 import os
 import textwrap
