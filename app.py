@@ -1,22 +1,49 @@
+import asyncio
+import os
 import streamlit as st
-from rag import chat_with_pdf
+from rag import RAGSystem
 
-st.title("Chat with your PDF")
+# Set up environment variables
+os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+os.environ["LLAMA_PARSE_API_KEY"] = st.secrets["LLAMA_PARSE_API_KEY"]
 
-# Upload PDF
-uploaded_file = st.file_uploader("Upload your PDF", type=["pdf"])
+# Initialize RAG system
+rag_system = RAGSystem(
+    groq_api_key=os.environ["GROQ_API_KEY"],
+    llama_parse_api_key=os.environ["LLAMA_PARSE_API_KEY"],
+    pdf_dir="pdfs",
+    db_dir="db"
+)
 
-# Query input
-query = st.text_input("Ask a question about the document")
+st.title("Chat with PDF")
 
-# Perform chat with PDF when both file and query are provided
-if uploaded_file and query:
-    pdf_path = f"./pdf_storage/{uploaded_file.name}"
-    with open(pdf_path, "wb") as f:
+# File uploader
+uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+
+if uploaded_file is not None:
+    # Save the uploaded file
+    with open(os.path.join("pdfs", uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
-
-    # Run the chat with PDF
-    response = chat_with_pdf(pdf_path, query)
     
-    # Display the response
-    st.write(response)
+    # Process the PDF
+    with st.spinner("Processing PDF..."):
+        asyncio.run(rag_system.process_pdf(os.path.join("pdfs", uploaded_file.name)))
+    
+    st.success("PDF processed successfully!")
+    
+    # Set up QA chain
+    rag_system.setup_qa_chain()
+    
+    # Chat interface
+    st.subheader("Ask questions about the PDF")
+    user_question = st.text_input("Enter your question:")
+    
+    if user_question:
+        with st.spinner("Generating answer..."):
+            response = rag_system.ask_question(user_question)
+        
+        st.write("Answer:")
+        st.write(response["result"])
+
+st.sidebar.header("About")
+st.sidebar.info("This app allows you to chat with a PDF document using RAG (Retrieval-Augmented Generation) technology.")
