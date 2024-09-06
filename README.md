@@ -1,6 +1,6 @@
 # Chat with PDF
 
-This project is a Streamlit application that allows users to interact with PDF documents using Retrieval-Augmented Generation (RAG) technology. The application processes PDF files, extracts their content, and enables users to ask questions about the content.
+This project is a Streamlit application that allows users to interact with PDF documents using Retrieval-Augmented Generation (RAG). The application processes PDF files, extracts their content, and enables users to ask questions about the content.
 
 ## Features
 
@@ -11,22 +11,24 @@ This project is a Streamlit application that allows users to interact with PDF d
 ## Requirements
 
 Ensure you have the following Python packages installed:
-plaintext
-streamlit==1.24.0
-langchain==0.1.17
-langchain-groq==0.1.3
-llama-parse==0.1.3
-qdrant-client==1.9.1
-unstructured[md]==0.13.6
-fastembed==0.2.7
-flashrank==0.2.4
-chardet==5.1.0
-langchain_core
+
+- `streamlit==1.24.0`
+- `langchain==0.1.17`
+- `langchain-groq==0.1.3`
+- `llama-parse==0.1.3`
+- `qdrant-client==1.9.1`
+- `unstructured[md]==0.13.6`
+- `fastembed==0.2.7`
+- `flashrank==0.2.4`
+- `chardet==5.1.0`
+- `langchain_core`
 
 
 You can install the requirements using:
-bash
+
+```bash
 pip install -r requirements.txt
+```
 
 
 ## Environment Variables
@@ -77,9 +79,10 @@ Set the following environment variables in your Streamlit secrets:
 ## Running the Application
 
 To run the application, execute the following command in your terminal:
-bash
-streamlit run app.py
 
+```bash
+streamlit run app.py
+```
 
 Open your browser and navigate to `http://localhost:8501` to interact with the application.
 
