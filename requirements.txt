@@ -6,3 +6,5 @@ qdrant-client==1.9.1
 unstructured[md]==0.13.6
 fastembed==0.2.7
 flashrank==0.2.4
+chardet==5.1.0
+langchain_core

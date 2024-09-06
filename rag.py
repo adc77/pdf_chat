@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from typing import List
+import chardet
 
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
@@ -12,6 +13,7 @@ from langchain_community.document_loaders import UnstructuredMarkdownLoader
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_groq import ChatGroq
 from llama_parse import LlamaParse
+from langchain_core.documents import Document
 
 class RAGSystem:
     def __init__(self, groq_api_key: str, llama_parse_api_key: str, pdf_dir: str, db_dir: str):
@@ -41,14 +43,43 @@ class RAGSystem:
         with document_path.open("w") as f:
             f.write(parsed_doc.text)
 
+         # Detect the file encoding
+        with open(document_path, 'rb') as file:
+            raw_data = file.read()
+            result = chardet.detect(raw_data)
+            file_encoding = result['encoding']
+
+        """
+        # Use the detected encoding to load the file
+        with open(document_path, 'r', encoding=file_encoding) as file:
+            content = file.read()
+
+        # Create a temporary file with UTF-8 encoding
+        temp_path = self.pdf_dir / f"{Path(pdf_path).stem}_temp.md"
+        with open(temp_path, 'w', encoding='utf-8') as temp_file:
+            temp_file.write(content)
+
         loader = UnstructuredMarkdownLoader(document_path)
         loaded_documents = loader.load()
+
+        # Remove the temporary file
+        os.remove(temp_path)
+        """
+
+         # Decode the content using the detected encoding
+        content = raw_data.decode(file_encoding)
+
+        # Create a Document object
+        doc = Document(page_content=content, metadata={"source": str(document_path)})
 
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=2048,
             chunk_overlap=128,
         )
-        docs = text_splitter.split_documents(loaded_documents)
+
+        # docs = text_splitter.split_documents(loaded_documents)
+        # or
+        docs = text_splitter.split_documents([doc])
 
         embeddings = FastEmbedEmbeddings(model_name="BAAI/bge-base-en-v1.5")
 
