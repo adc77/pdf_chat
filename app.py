@@ -46,4 +46,4 @@ if uploaded_file is not None:
         st.write(response["result"])
 
 st.sidebar.header("About")
-st.sidebar.info("This app allows you to chat with a PDF document using RAG (Retrieval-Augmented Generation) technology.")
+st.sidebar.info("This app allows you to chat with a PDF document using RAG (Retrieval-Augmented Generation)")
