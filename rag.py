@@ -49,24 +49,8 @@ class RAGSystem:
             result = chardet.detect(raw_data)
             file_encoding = result['encoding']
 
-        """
-        # Use the detected encoding to load the file
-        with open(document_path, 'r', encoding=file_encoding) as file:
-            content = file.read()
-
-        # Create a temporary file with UTF-8 encoding
-        temp_path = self.pdf_dir / f"{Path(pdf_path).stem}_temp.md"
-        with open(temp_path, 'w', encoding='utf-8') as temp_file:
-            temp_file.write(content)
-
-        loader = UnstructuredMarkdownLoader(document_path)
-        loaded_documents = loader.load()
-
-        # Remove the temporary file
-        os.remove(temp_path)
-        """
-
-         # Decode the content using the detected encoding
+        # without using UnstructuredMarkdownLoader
+        # Decode the content using the detected encoding
         content = raw_data.decode(file_encoding)
 
         # Create a Document object
@@ -121,7 +105,7 @@ class RAGSystem:
             chain_type="stuff",
             retriever=compression_retriever,
             return_source_documents=True,
-            chain_type_kwargs={"prompt": prompt, "verbose": True},
+            chain_type_kwargs={"prompt": prompt, "verbose": False},
         )
 
     def ask_question(self, question: str) -> dict:
