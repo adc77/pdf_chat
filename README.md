@@ -8,28 +8,6 @@ This is a Streamlit application that allows you to interact with PDF documents u
 - Ask questions related to the content of the uploaded PDF
 - Get answers from a language model (llama 3 here), which now has the context of the uploaded document
 
-## create venv
-```bash
-python -m venv venv
-```
-## activate venv
-```bash
-venv/scripts/activate
-```
-
-## Install requirements
-
-```bash
-pip install -r requirements.txt
-```
-
-
-## Environment Variables
-
-Set the following environment variables in your Streamlit secrets:
-
-- `GROQ_API_KEY`: Your groq API key from https://console.groq.com/login.
-- `LLAMA_PARSE_API_KEY`: Your LlamaParse API key from https://cloud.llamaindex.ai/login.
 
 ## File Structure
 
@@ -54,7 +32,6 @@ Set the following environment variables in your Streamlit secrets:
    - Provides a text input for users to ask questions about the PDF, and displays the generated answers.
 
 
-
 ### `rag.py`
 
 1. **Imports**: Imports necessary libraries for handling PDFs, embeddings, and document processing.
@@ -70,6 +47,35 @@ Set the following environment variables in your Streamlit secrets:
    - **Question Handling**: Provides a method to ask questions and retrieve answers.
 
 ## Running the Application
+
+## clone the repo
+
+```bash
+git clone https://github.com/adc77/pdf_chat.git
+```
+open folder in VScode/cursor or any other IDE
+
+## create venv
+
+```bash
+python -m venv venv
+```
+## activate venv
+
+```bash
+venv/scripts/activate
+```
+## Install requirements
+
+```bash
+pip install -r requirements.txt
+```
+## Set up Environment Variables
+
+Set the following environment variables in your Streamlit secrets:
+
+- `GROQ_API_KEY`: Your groq API key from https://console.groq.com/login.
+- `LLAMA_PARSE_API_KEY`: Your LlamaParse API key from https://cloud.llamaindex.ai/login.
 
 To run the application:
 
