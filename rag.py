@@ -81,7 +81,7 @@ class RAGSystem:
             base_compressor=compressor, base_retriever=retriever
         )
 
-        llm = ChatGroq(temperature=0, model_name="llama3-70b-8192")
+        llm = ChatGroq(temperature=0, model_name="llama-3.1-8b-instant")
 
         prompt_template = """
         Use the following pieces of information to answer the user's question.
@@ -95,7 +95,6 @@ class RAGSystem:
 
         Responses should be properly formatted to be easily read.
         """
-
         prompt = PromptTemplate(
             template=prompt_template, input_variables=["context", "question"]
         )

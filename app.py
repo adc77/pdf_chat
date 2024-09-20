@@ -2,6 +2,7 @@ import asyncio
 import os
 import streamlit as st
 from rag import RAGSystem
+#from updated_rag import RAGSystem
 
 # Set up environment variables
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
