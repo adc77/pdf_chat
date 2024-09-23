@@ -1,3 +1,6 @@
+"""
+not part of the chat w/ pdf rag pipeline!
+"""
 import os
 from pathlib import Path
 import chardet
